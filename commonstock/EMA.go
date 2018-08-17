@@ -24,10 +24,11 @@ func NewEMA(list []*commonmodels.Kline, period int) *EMA {
 }
 
 // Calculation Func
-func (e *EMA) Calculation() {
+func (e *EMA) Calculation() *EMA {
 	for _, v := range e.kline {
 		e.Add(v.KlineTime, v.Close)
 	}
+	return e
 }
 
 // GetPoints return Point

@@ -10,9 +10,7 @@ func TestEMA(t *testing.T) {
 	list := InitTestKline()
 	//计算新的OBV
 	stock := NewEMA(list, 5)
-	stock.Calculation()
-
-	ema5List := stock.GetPoints()
+	ema5List := stock.Calculation().GetPoints()
 
 	for i := 0; i < len(ema5List); i++ {
 		e5 := ema5List[i]

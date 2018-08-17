@@ -72,7 +72,7 @@ MACD＝（DIF－DEA）*2
 
 >  其中LONG=26，SHORT=12，MID=9    
 >
-> 缺省时，系统在副图上绘制SHORT=12，LONG=26， MID=9时的DIF线、DEA线、MACD线（柱状线）。    
+> 缺省时，系统在副图上绘制SHORT=12，LON	G=26， MID=9时的DIF线、DEA线、MACD线（柱状线）。    
 
 ​    
 
