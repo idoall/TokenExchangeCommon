@@ -556,6 +556,19 @@ func IntFromString(raw interface{}) (int, error) {
 	return n, nil
 }
 
+// Int32FromString format
+func Int32FromString(raw interface{}) (int32, error) {
+	str, ok := raw.(string)
+	if !ok {
+		return 0, fmt.Errorf("unable to parse, value not string: %T", raw)
+	}
+	n, err := strconv.Atoi(str)
+	if err != nil {
+		return 0, fmt.Errorf("unable to parse as int: %T", raw)
+	}
+	return int32(n), nil
+}
+
 // Int64FromString format
 func Int64FromString(raw interface{}) (int64, error) {
 	str, ok := raw.(string)
