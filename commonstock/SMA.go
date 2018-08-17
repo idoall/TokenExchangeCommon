@@ -1,20 +1,18 @@
 package commonstock
 
 import (
-	"fmt"
-	"log"
-	"time"
-
 	"github.com/idoall/TokenExchangeCommon/commonmodels"
-	"github.com/idoall/TokenExchangeCommon/commonutils"
 )
 
 // SMA struct
 type SMA struct {
 	Period int //默认计算几天的MA,KDJ一般是9，OBV是10、20、30
-	Value  []float64
-	Time   []time.Time
+	points []smaPoint
 	kline  []*commonmodels.Kline
+}
+
+type smaPoint struct {
+	point
 }
 
 // NewSMA new Func
@@ -24,23 +22,29 @@ func NewSMA(list []*commonmodels.Kline, period int) *SMA {
 }
 
 // Calculation Func
-func (e *SMA) Calculation() {
+func (e *SMA) Calculation() *SMA {
 	for i := 0; i < len(e.kline); i++ {
+		var smaPointStruct smaPoint
 		if i > e.Period-1 {
 			var sum float64
 			for j := i; j >= (i - (e.Period - 1)); j-- {
 
 				sum += e.kline[j].Close
 			}
-			tempValue, err := commonutils.FloatFromString(fmt.Sprintf("%d", e.Period))
-			if err != nil {
-				log.Panicf("MA commonutils.FloatFromString() Err:%s", err.Error())
-			}
-			e.Value = append(e.Value, +(sum / tempValue))
+			smaPointStruct.Value = (+(sum / float64(e.Period)))
+			// e.Value = append(e.Value, +(sum / e.Period))
 		} else {
-			e.Value = append(e.Value, 0.0)
+			smaPointStruct.Value = 0.0
+			// e.Value = append(e.Value, 0.0)
 		}
 
-		e.Time = append(e.Time, e.kline[i].KlineTime)
+		smaPointStruct.Time = e.kline[i].KlineTime
+		e.points = append(e.points, smaPointStruct)
 	}
+	return e
+}
+
+// GetPoints Func
+func (e *SMA) GetPoints() []smaPoint {
+	return e.points
 }
