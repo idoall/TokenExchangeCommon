@@ -233,6 +233,7 @@ func TrimString(input, cutset string) string {
 }
 
 // ReplaceString replaces a string with another
+// 返回将s中前n个不重叠old子串都替换为new的新字符串，如果n<0会替换所有old子串。
 func ReplaceString(input, old, new string, n int) string {
 	return strings.Replace(input, old, new, n)
 }
