@@ -446,6 +446,18 @@ func WriteFile(file string, data []byte) error {
 	return nil
 }
 
+// PathExists 判断文件或文件夹是否存在的方法
+func PathExists(path string) bool {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true
+	}
+	if os.IsNotExist(err) {
+		return false
+	}
+	return false
+}
+
 // RemoveFile removes a file
 func RemoveFile(file string) error {
 	return os.Remove(file)
