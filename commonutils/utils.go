@@ -193,6 +193,16 @@ func StringDataCompare(haystack []string, needle string) bool {
 	return false
 }
 
+// Int64DataCompare data checks the substring array with an input and returns a bool
+func Int64DataCompare(haystack []int64, needle int64) bool {
+	for x := range haystack {
+		if haystack[x] == needle {
+			return true
+		}
+	}
+	return false
+}
+
 // StringDataCompareUpper data checks the substring array with an input and returns
 // a bool irrespective of lower or upper case strings
 func StringDataCompareUpper(haystack []string, needle string) bool {
