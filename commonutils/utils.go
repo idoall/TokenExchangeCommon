@@ -111,6 +111,7 @@ func GetHMAC(hashType int, input, key []byte) []byte {
 		}
 	}
 
+	// 使用给定的hash.Hash类型和密钥返回新的HMAC哈希
 	hmac := hmac.New(hash, []byte(key))
 	hmac.Write(input)
 	return hmac.Sum(nil)
@@ -126,6 +127,11 @@ func Sha1ToHex(data string) string {
 // HexEncodeToString takes in a hexadecimal byte array and returns a string
 func HexEncodeToString(input []byte) string {
 	return hex.EncodeToString(input)
+}
+
+// HexDecodeToBytes takes in a hexadecimal string and returns a byte array
+func HexDecodeToBytes(input string) ([]byte, error) {
+	return hex.DecodeString(input)
 }
 
 // ByteArrayToString returns a string
