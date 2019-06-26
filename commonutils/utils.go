@@ -440,6 +440,16 @@ func UnixTimestampStrToTime(timeStr string) (time.Time, error) {
 	return time.Unix(i, 0), nil
 }
 
+// CreateDir creates a directory based on the supplied parameter
+func CreateDir(dir string) error {
+	_, err := os.Stat(dir)
+	if !os.IsNotExist(err) {
+		return nil
+	}
+	
+	return os.MkdirAll(dir, 0770)
+}
+
 // ReadFile reads a file and returns read data as byte array.
 func ReadFile(path string) ([]byte, error) {
 	file, err := ioutil.ReadFile(path)
