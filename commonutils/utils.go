@@ -17,6 +17,7 @@ import (
 	"io"
 	"io/ioutil"
 	"math"
+	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -43,6 +44,13 @@ const (
 	SatoshisPerLTC = 100000000
 	WeiPerEther    = 1000000000000000000
 )
+
+// NewHTTPClientWithTimeout initialises a new HTTP client with the specified
+// timeout duration
+func NewHTTPClientWithTimeout(t time.Duration) *http.Client {
+	h := &http.Client{Timeout: t}
+	return h
+}
 
 // GetRandomSalt returns a random salt
 func GetRandomSalt(input []byte, saltLen int) ([]byte, error) {
@@ -187,6 +195,28 @@ func StringDataContains(haystack []string, needle string) bool {
 func StringDataCompare(haystack []string, needle string) bool {
 	for x := range haystack {
 		if haystack[x] == needle {
+			return true
+		}
+	}
+	return false
+}
+
+// StringDataCompareInsensitive data checks the substring array with an input and returns
+// a bool irrespective of lower or upper case strings
+func StringDataCompareInsensitive(haystack []string, needle string) bool {
+	for x := range haystack {
+		if strings.EqualFold(haystack[x], needle) {
+			return true
+		}
+	}
+	return false
+}
+
+// StringDataContainsInsensitive checks the substring array with an input and returns
+// a bool irrespective of lower or upper case strings
+func StringDataContainsInsensitive(haystack []string, needle string) bool {
+	for _, data := range haystack {
+		if strings.Contains(StringToUpper(data), StringToUpper(needle)) {
 			return true
 		}
 	}
