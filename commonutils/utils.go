@@ -17,6 +17,7 @@ import (
 	"io"
 	"io/ioutil"
 	"math"
+	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -43,6 +44,13 @@ const (
 	SatoshisPerLTC = 100000000
 	WeiPerEther    = 1000000000000000000
 )
+
+// NewHTTPClientWithTimeout initialises a new HTTP client with the specified
+// timeout duration
+func NewHTTPClientWithTimeout(t time.Duration) *http.Client {
+	h := &http.Client{Timeout: t}
+	return h
+}
 
 // GetRandomSalt returns a random salt
 func GetRandomSalt(input []byte, saltLen int) ([]byte, error) {
@@ -111,6 +119,7 @@ func GetHMAC(hashType int, input, key []byte) []byte {
 		}
 	}
 
+	// 使用给定的hash.Hash类型和密钥返回新的HMAC哈希
 	hmac := hmac.New(hash, []byte(key))
 	hmac.Write(input)
 	return hmac.Sum(nil)
@@ -126,6 +135,11 @@ func Sha1ToHex(data string) string {
 // HexEncodeToString takes in a hexadecimal byte array and returns a string
 func HexEncodeToString(input []byte) string {
 	return hex.EncodeToString(input)
+}
+
+// HexDecodeToBytes takes in a hexadecimal string and returns a byte array
+func HexDecodeToBytes(input string) ([]byte, error) {
+	return hex.DecodeString(input)
 }
 
 // ByteArrayToString returns a string
@@ -187,6 +201,28 @@ func StringDataContains(haystack []string, needle string) bool {
 func StringDataCompare(haystack []string, needle string) bool {
 	for x := range haystack {
 		if haystack[x] == needle {
+			return true
+		}
+	}
+	return false
+}
+
+// StringDataCompareInsensitive data checks the substring array with an input and returns
+// a bool irrespective of lower or upper case strings
+func StringDataCompareInsensitive(haystack []string, needle string) bool {
+	for x := range haystack {
+		if strings.EqualFold(haystack[x], needle) {
+			return true
+		}
+	}
+	return false
+}
+
+// StringDataContainsInsensitive checks the substring array with an input and returns
+// a bool irrespective of lower or upper case strings
+func StringDataContainsInsensitive(haystack []string, needle string) bool {
+	for _, data := range haystack {
+		if strings.Contains(StringToUpper(data), StringToUpper(needle)) {
 			return true
 		}
 	}
