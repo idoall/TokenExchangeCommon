@@ -482,7 +482,7 @@ func CreateDir(dir string) error {
 	if !os.IsNotExist(err) {
 		return nil
 	}
-	
+
 	return os.MkdirAll(dir, 0770)
 }
 
@@ -612,6 +612,28 @@ func FloatFromString(raw interface{}) (float64, error) {
 		return 0, fmt.Errorf("unable to parse, value not string: %T", raw)
 	}
 	return flt, nil
+}
+
+// Int32ToString format
+func Int32ToString(n int32) string {
+	buf := [11]byte{}
+	pos := len(buf)
+	i := int64(n)
+	signed := i < 0
+	if signed {
+		i = -i
+	}
+	for {
+		pos--
+		buf[pos], i = '0'+byte(i%10), i/10
+		if i == 0 {
+			if signed {
+				pos--
+				buf[pos] = '-'
+			}
+			return string(buf[pos:])
+		}
+	}
 }
 
 // IntFromString format
