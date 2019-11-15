@@ -37,6 +37,7 @@ func (e *EMA) GetPoints() []emaPoint {
 }
 
 // Add adds a new Value to Ema
+// 使用方法，先添加最早日期的数据，结果与 AICoin 对比完全一致
 func (e *EMA) Add(timestamp time.Time, value float64) {
 	p := emaPoint{}
 	p.Time = timestamp
@@ -51,6 +52,7 @@ func (e *EMA) Add(timestamp time.Time, value float64) {
 		emaTminusOne = e.points[len(e.points)-1].Value
 	}
 
+	// 计算 EMA指数
 	emaT := alpha*value + (1-alpha)*emaTminusOne
 	p.Value = emaT
 	e.points = append(e.points, p)
