@@ -53,6 +53,7 @@ type bollPoint struct {
 }
 
 // NewBOLL Func
+// 使用方法，先添加最早日期的数据,最后一条应该是当前日期的数据，结果与 AICoin 对比完全一致
 func NewBOLL(list []*commonmodels.Kline) *BOLL {
 	return &BOLL{PeriodN: 20, PeriodK: 2.0, kline: list}
 }

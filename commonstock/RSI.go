@@ -16,6 +16,7 @@ type rsiPoint struct {
 }
 
 // NewRSI new Func
+// 使用方法，先添加最早日期的数据,最后一条应该是当前日期的数据，结果与 AICoin 对比完全一致
 func NewRSI(list []*commonmodels.Kline, period int) *RSI {
 	m := &RSI{kline: list, Period: period}
 	return m

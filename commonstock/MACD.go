@@ -38,6 +38,7 @@ type macdPoint struct {
 }
 
 // NewMACD new Func
+// 使用方法，先添加最早日期的数据,最后一条应该是当前日期的数据，结果与 AICoin 对比完全一致
 func NewMACD(list []*commonmodels.Kline) *MACD {
 	m := &MACD{PeriodShort: 12, PeriodSignal: 9, PeriodLong: 26, kline: list}
 	return m
