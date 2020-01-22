@@ -37,14 +37,14 @@ cci =（典型价格 - tp的20周期平均值）/（.015 x平均偏差）
 type CCI struct {
 	Period       int     //默认计算几天的
 	factor       float64 //计算系数
-	points       []cciPoint
+	points       []CCIPoint
 	typicalPrice []float64
 	avedevPrice  []float64
 	maPrice      []float64
 	list         []*commonmodels.Kline
 }
 
-type cciPoint struct {
+type CCIPoint struct {
 	point
 }
 
@@ -96,7 +96,7 @@ func (e *CCI) Calculation() *CCI {
 	//计算 CCI
 	// cci =（典型价格 - tp的20周期平均值）/（.015 x平均偏差）
 	for i := 0; i < len(e.maPrice); i++ {
-		var p cciPoint
+		var p CCIPoint
 		p.Time = e.list[i].KlineTime
 		if i < e.Period-1 {
 			p.Value = 0
@@ -111,7 +111,7 @@ func (e *CCI) Calculation() *CCI {
 }
 
 // GetPoints return Point
-func (e *CCI) GetPoints() []cciPoint {
+func (e *CCI) GetPoints() []CCIPoint {
 	return e.points
 }
 

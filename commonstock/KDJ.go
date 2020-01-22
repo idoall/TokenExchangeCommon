@@ -9,11 +9,11 @@ import (
 // KDJ is the main object
 type KDJ struct {
 	Period int //默认计算几天的
-	points []kdjPoint
+	points []KDJPoint
 	kline  []*commonmodels.Kline
 }
 
-type kdjPoint struct {
+type KDJPoint struct {
 	Time time.Time
 	RSV  float64
 	K    float64
@@ -33,7 +33,7 @@ func (e *KDJ) Calculation() *KDJ {
 	rsv, k, d := e.calculationKD(e.kline)
 	arrayLen := len(rsv)
 	for i := 0; i < arrayLen; i++ {
-		e.points = append(e.points, kdjPoint{
+		e.points = append(e.points, KDJPoint{
 			RSV:  rsv[i],
 			K:    k[i],
 			D:    d[i],
@@ -48,7 +48,7 @@ func (e *KDJ) Calculation() *KDJ {
 }
 
 // GetPoints return Point
-func (e *KDJ) GetPoints() []kdjPoint {
+func (e *KDJ) GetPoints() []KDJPoint {
 	return e.points
 }
 

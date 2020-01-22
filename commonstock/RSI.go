@@ -7,11 +7,11 @@ import (
 // RSI is the main object
 type RSI struct {
 	Period int //默认计算几天的
-	points []rsiPoint
+	points []RSIPoint
 	kline  []*commonmodels.Kline
 }
 
-type rsiPoint struct {
+type RSIPoint struct {
 	point
 }
 
@@ -32,7 +32,7 @@ func (e *RSI) Calculation() *RSI {
 
 	rsiArrayLen := len(rsiArray)
 	for i := 0; i <= (rsiArrayLen - 1); i++ {
-		var p rsiPoint
+		var p RSIPoint
 		p.Time = e.kline[i].KlineTime
 		p.Value = rsiArray[i]
 		e.points = append(e.points, p)
@@ -41,7 +41,7 @@ func (e *RSI) Calculation() *RSI {
 }
 
 // GetPoints return Point
-func (e *RSI) GetPoints() []rsiPoint {
+func (e *RSI) GetPoints() []RSIPoint {
 	return e.points
 }
 

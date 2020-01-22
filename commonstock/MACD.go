@@ -26,11 +26,11 @@ type MACD struct {
 	PeriodShort  int //默认12
 	PeriodSignal int //信号长度默认9
 	PeriodLong   int //默认26
-	points       []macdPoint
+	points       []MACDPoint
 	kline        []*commonmodels.Kline
 }
 
-type macdPoint struct {
+type MACDPoint struct {
 	Time time.Time
 	DIF  float64
 	DEA  float64
@@ -52,7 +52,7 @@ func (e *MACD) Calculation() *MACD {
 	//计算DIF
 	for i := 0; i < len(e.kline); i++ {
 		dif := emaShort[i].Value - emaLong[i].Value
-		e.points = append(e.points, macdPoint{DIF: dif, Time: emaShort[i].Time})
+		e.points = append(e.points, MACDPoint{DIF: dif, Time: emaShort[i].Time})
 	}
 
 	//临时变量，用于计算DEA
@@ -71,6 +71,6 @@ func (e *MACD) Calculation() *MACD {
 }
 
 // GetPoints return Point
-func (e *MACD) GetPoints() []macdPoint {
+func (e *MACD) GetPoints() []MACDPoint {
 	return e.points
 }

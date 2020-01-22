@@ -9,11 +9,11 @@ import (
 // EMA struct
 type EMA struct {
 	Period int //默认计算几天的EMA
-	points []emaPoint
+	points []EMAPoint
 	kline  []*commonmodels.Kline
 }
 
-type emaPoint struct {
+type EMAPoint struct {
 	point
 }
 
@@ -32,14 +32,14 @@ func (e *EMA) Calculation() *EMA {
 }
 
 // GetPoints return Point
-func (e *EMA) GetPoints() []emaPoint {
+func (e *EMA) GetPoints() []EMAPoint {
 	return e.points
 }
 
 // Add adds a new Value to Ema
 // 使用方法，先添加最早日期的数据,最后一条应该是当前日期的数据，结果与 AICoin 对比完全一致
 func (e *EMA) Add(timestamp time.Time, value float64) {
-	p := emaPoint{}
+	p := EMAPoint{}
 	p.Time = timestamp
 
 	//平滑指数，一般取作2/(N+1)

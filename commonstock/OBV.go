@@ -13,11 +13,11 @@ import (
 
 // OBV struct
 type OBV struct {
-	points []obvPoint
+	points []OBVPoint
 	kline  []*commonmodels.Kline
 }
 
-type obvPoint struct {
+type OBVPoint struct {
 	point
 }
 
@@ -46,7 +46,7 @@ func (e *OBV) Calculation() *OBV {
 		} else if item.Close == e.kline[i-1].Close {
 			value = e.points[i-1].Value
 		}
-		var p obvPoint
+		var p OBVPoint
 		p.Value = value
 		p.Time = item.KlineTime
 		e.points = append(e.points, p)
@@ -55,6 +55,6 @@ func (e *OBV) Calculation() *OBV {
 }
 
 // GetPoints Func
-func (e *OBV) GetPoints() []obvPoint {
+func (e *OBV) GetPoints() []OBVPoint {
 	return e.points
 }

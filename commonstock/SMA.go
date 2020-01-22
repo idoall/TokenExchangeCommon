@@ -7,11 +7,11 @@ import (
 // SMA struct
 type SMA struct {
 	Period int //默认计算几天的MA,KDJ一般是9，OBV是10、20、30
-	points []smaPoint
+	points []SMAPoint
 	kline  []*commonmodels.Kline
 }
 
-type smaPoint struct {
+type SMAPoint struct {
 	point
 }
 
@@ -24,7 +24,7 @@ func NewSMA(list []*commonmodels.Kline, period int) *SMA {
 // Calculation Func
 func (e *SMA) Calculation() *SMA {
 	for i := 0; i < len(e.kline); i++ {
-		var smaPointStruct smaPoint
+		var smaPointStruct SMAPoint
 		if i > e.Period-1 {
 			var sum float64
 			for j := i; j >= (i - (e.Period - 1)); j-- {
@@ -45,6 +45,6 @@ func (e *SMA) Calculation() *SMA {
 }
 
 // GetPoints Func
-func (e *SMA) GetPoints() []smaPoint {
+func (e *SMA) GetPoints() []SMAPoint {
 	return e.points
 }
