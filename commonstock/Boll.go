@@ -41,11 +41,11 @@ DN=MB－2×MD
 type BOLL struct {
 	PeriodN int     //计算周期
 	PeriodK float64 //带宽
-	points  []bollPoint
+	points  []BOLLPoint
 	kline   []*commonmodels.Kline
 }
 
-type bollPoint struct {
+type BOLLPoint struct {
 	UP   float64
 	MID  float64
 	Low  float64
@@ -83,7 +83,7 @@ func (e *BOLL) dma(lines []*commonmodels.Kline, ma float64) float64 {
 func (e *BOLL) Calculation() *BOLL {
 	l := len(e.kline)
 
-	e.points = make([]bollPoint, l)
+	e.points = make([]BOLLPoint, l)
 	if l < e.PeriodN {
 		for i := 0; i < len(e.kline); i++ {
 			e.points[i].Time = e.kline[i].KlineTime
@@ -105,6 +105,6 @@ func (e *BOLL) Calculation() *BOLL {
 }
 
 // GetPoints Func
-func (e *BOLL) GetPoints() []bollPoint {
+func (e *BOLL) GetPoints() []BOLLPoint {
 	return e.points
 }
