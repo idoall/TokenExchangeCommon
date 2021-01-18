@@ -614,6 +614,17 @@ func FloatFromString(raw interface{}) (float64, error) {
 	return flt, nil
 }
 
+// FloatFromStringDontRound 不需要小数点四舍五入，直接取位数
+func FloatFromStringDontRound(num float64, exp int) (float64, error) {
+	n := strconv.FormatFloat(num, 'f', -1, 32)
+	newn := strings.Split(n, ".")
+	b, err := strconv.ParseFloat(newn[0]+"."+newn[1][:exp], 64)
+	if err != nil {
+		return 0, err
+	}
+	return b, nil
+}
+
 // Int32ToString format
 func Int32ToString(n int32) string {
 	buf := [11]byte{}
