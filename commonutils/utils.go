@@ -443,6 +443,20 @@ func OutputCSV(path string, data [][]string) error {
 	return nil
 }
 
+func GetCaller() (filePath,fileName, funcName string ,lineNum int){
+	var filePathName string
+	var pc uintptr
+	// Skip this function, and fetch the PC and file for its parent
+	pc, filePathName, lineNum, _ = runtime.Caller(1)
+	// Retrieve a Function object this functions parent
+	functionObject := runtime.FuncForPC(pc)
+	// Regex to extract just the function name (and not the module path)
+	extractFnName := regexp.MustCompile(`^.*\.(.*)$`)
+	funcName = extractFnName.ReplaceAllString(functionObject.Name(), "$1")
+	filePath, fileName = filepath.Split(filePathName)
+	return
+}
+
 // GetFuncName 获取调用方法的名称
 func GetFuncName() string {
 	// Skip this function, and fetch the PC and file for its parent
