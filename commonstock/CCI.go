@@ -71,9 +71,18 @@ func (e *CCI) Calculation() *CCI {
 	// for _, v := range e.kline {
 	// 	closeArray = append(closeArray, v.Close)
 	// }
-	maStruct := NewMA(e.typicalPrice, e.Period)
-	maStruct.Calculation()
-	e.maPrice = maStruct.Value
+	var tempKlineArray []*commonmodels.Kline
+	for i := 0; i < len(e.typicalPrice); i++ {
+		tempKlineArray = append(tempKlineArray, &commonmodels.Kline{
+			Close:     e.typicalPrice[i],
+			KlineTime: e.list[i].KlineTime,
+		})
+	}
+	maStruct := NewMA(tempKlineArray, e.Period)
+	maPoints := maStruct.Calculation().GetPoints()
+	for _, v := range maPoints {
+		e.maPrice = append(e.maPrice, v.Value)
+	}
 
 	//计算平均偏差有三个步骤。
 	// 1.减去最近的20个期间，简单地从该时期的每个典型价格（tp）移动。

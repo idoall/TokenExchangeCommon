@@ -9,16 +9,12 @@ func TestMA(t *testing.T) {
 	t.Parallel()
 	list := InitTestKline()
 
-	var valueArray []float64
-	for _, v := range list {
-		valueArray = append(valueArray, v.Close)
-	}
 	//计算新的OBV
-	stock := NewMA(valueArray, 5)
-	stock.Calculation()
+	stock := NewMA(list, 5)
+	ema5List := stock.Calculation().GetPoints()
 
-	for i := 0; i < len(stock.Value); i++ {
-		// for i := 0; i < 50; i++ {
-		fmt.Printf("[%d] Value:%f\n", i, stock.Value[i])
+	for i := 0; i < len(ema5List); i++ {
+		e5 := ema5List[i]
+		fmt.Printf("[%d][%s] MA5:%.3f \n", i, e5.Time.Format("2006-01-02 15:04:05"), e5.Value)
 	}
 }
