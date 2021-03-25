@@ -443,7 +443,7 @@ func OutputCSV(path string, data [][]string) error {
 	return nil
 }
 
-func GetCaller() (filePath,fileName, funcName string ,lineNum int){
+func GetCaller() (filePath, fileName, funcName string, lineNum int) {
 	var filePathName string
 	var pc uintptr
 	// Skip this function, and fetch the PC and file for its parent
@@ -629,10 +629,15 @@ func FloatFromString(raw interface{}) (float64, error) {
 }
 
 // FloatFromStringDontRound 不需要小数点四舍五入，直接取位数
-func FloatFromStringDontRound(num float64, exp int) (float64, error) {
+func FloatFromStringDontRound(num float64, exp int) (result float64, err error) {
 	n := strconv.FormatFloat(num, 'f', -1, 32)
 	newn := strings.Split(n, ".")
-	b, err := strconv.ParseFloat(newn[0]+"."+newn[1][:exp], 64)
+
+	if len(newn[1]) >= exp {
+		result, err = strconv.ParseFloat(newn[0]+"."+newn[1][:exp], 64)
+	} else {
+		result, err = strconv.ParseFloat(newn[0]+"."+newn[1], 64)
+	}
 	if err != nil {
 		return 0, err
 	}
