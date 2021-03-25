@@ -641,7 +641,7 @@ func FloatFromStringDontRound(num float64, exp int) (result float64, err error) 
 	if err != nil {
 		return 0, err
 	}
-	return b, nil
+	return result, nil
 }
 
 // Int32ToString format
