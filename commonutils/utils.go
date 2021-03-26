@@ -633,7 +633,7 @@ func FloatFromStringDontRound(num float64, exp int) (result float64, err error) 
 	n := strconv.FormatFloat(num, 'f', -1, 32)
 	newn := strings.Split(n, ".")
 
-	if len(newn) == 0 {
+	if len(newn) == 1 {
 		result, err = strconv.ParseFloat(newn[0], 64)
 	} else if len(newn[1]) >= exp {
 		result, err = strconv.ParseFloat(newn[0]+"."+newn[1][:exp], 64)
