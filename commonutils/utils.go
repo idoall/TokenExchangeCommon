@@ -207,6 +207,36 @@ func StringDataCompare(haystack []string, needle string) bool {
 	return false
 }
 
+// TimeDataCompare data checks the substring array with an input and returns a bool
+func TimeDataCompare(haystack []time.Time, needle time.Time) bool {
+	for x := range haystack {
+		if haystack[x] == needle {
+			return true
+		}
+	}
+	return false
+}
+
+// IntDataCompare data checks the substring array with an input and returns a bool
+func IntDataCompare(haystack []int, needle int) bool {
+	for x := range haystack {
+		if haystack[x] == needle {
+			return true
+		}
+	}
+	return false
+}
+
+// Int64DataCompare data checks the substring array with an input and returns a bool
+func Int64DataCompare(haystack []int64, needle int64) bool {
+	for x := range haystack {
+		if haystack[x] == needle {
+			return true
+		}
+	}
+	return false
+}
+
 // StringDataCompareInsensitive data checks the substring array with an input and returns
 // a bool irrespective of lower or upper case strings
 func StringDataCompareInsensitive(haystack []string, needle string) bool {
@@ -223,16 +253,6 @@ func StringDataCompareInsensitive(haystack []string, needle string) bool {
 func StringDataContainsInsensitive(haystack []string, needle string) bool {
 	for _, data := range haystack {
 		if strings.Contains(StringToUpper(data), StringToUpper(needle)) {
-			return true
-		}
-	}
-	return false
-}
-
-// Int64DataCompare data checks the substring array with an input and returns a bool
-func Int64DataCompare(haystack []int64, needle int64) bool {
-	for x := range haystack {
-		if haystack[x] == needle {
 			return true
 		}
 	}
