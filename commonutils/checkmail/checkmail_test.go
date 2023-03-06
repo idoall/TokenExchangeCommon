@@ -33,7 +33,7 @@ func TestValidateHost(t *testing.T) {
 			continue
 		}
 
-		err := checkmail.ValidateHost(s.mail)
+		err := ValidateHost(s.mail)
 		if err != nil && s.account == true {
 			t.Errorf(`"%s" => unexpected error: "%v"`, s.mail, err)
 		}
@@ -45,7 +45,7 @@ func TestValidateHost(t *testing.T) {
 
 func TestValidateFormat(t *testing.T) {
 	for _, s := range samples {
-		err := checkmail.ValidateFormat(s.mail)
+		err := ValidateFormat(s.mail)
 		if err != nil && s.format == true {
 			t.Errorf(`"%s" => unexpected error: "%v"`, s.mail, err)
 		}

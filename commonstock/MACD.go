@@ -35,6 +35,7 @@ type MACDPoint struct {
 	DIF  float64
 	DEA  float64
 	MACD float64
+	Hist float64
 }
 
 // NewMACD new Func
