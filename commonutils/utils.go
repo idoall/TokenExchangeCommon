@@ -11,6 +11,7 @@ import (
 	"encoding/base64"
 	"encoding/csv"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"hash"
@@ -29,7 +30,6 @@ import (
 	"strings"
 	"time"
 
-	jsoniter "github.com/json-iterator/go"
 	"github.com/shopspring/decimal"
 )
 
@@ -397,7 +397,6 @@ func CalculateNetProfit(amount, priceThen, priceNow, costs float64) float64 {
 
 // JSONEncode encodes structure data into JSON
 func JSONEncode(v interface{}) ([]byte, error) {
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	return json.Marshal(v)
 }
 
@@ -406,7 +405,6 @@ func JSONDecode(data []byte, to interface{}) error {
 	if !StringContains(reflect.ValueOf(to).Type().String(), "*") {
 		return errors.New("json decode error - memory address not supplied")
 	}
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	return json.Unmarshal(data, to)
 }
 

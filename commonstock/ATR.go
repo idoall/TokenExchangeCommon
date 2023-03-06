@@ -32,7 +32,12 @@ func (e *ATR) Calculation() *ATR {
 	for i := 0; i < len(e.kline); i++ {
 		klineItem := e.kline[i]
 		var ATRPointStruct ATRPoint
-		ATRPointStruct.TR = math.Max(klineItem.High-klineItem.Low, math.Max(klineItem.High-klineItem.Close, klineItem.Close-klineItem.Low))
+		// TR= | 最高价 - 最低价 | 和 | 最高价 - 昨日收盘价 | 和 | 昨日收盘价 - 最低价 | 的最大值
+		var prevClose float64
+		if i != 0 {
+			prevClose = e.kline[i-1].Close
+		}
+		ATRPointStruct.TR = math.Max(klineItem.High-klineItem.Low, math.Max(klineItem.High-prevClose, prevClose-klineItem.Low))
 		ATRPointStruct.Time = e.kline[i].KlineTime
 		e.data = append(e.data, ATRPointStruct)
 	}
