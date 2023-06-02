@@ -1,4 +1,4 @@
-module github.com/idoall/TokenExchangeCommon
+module github.com/idoall/TokenExchangeCommon/v2
 
 go 1.19
 
