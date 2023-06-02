@@ -698,3 +698,37 @@ func TestTimeFromUnixNEscInt64(t *testing.T) {
 	i := int64(1530854162)
 	fmt.Println(TimeFromUnixNEscInt64(i).Format("2006-01-02 15:04:05")) //2018-07-06 13:16:02
 }
+
+// RUN
+// go test -v ./commonutils -run TestFloatFromStringDontRound
+func TestFloatFromStringDontRound(t *testing.T) {
+	t.Parallel()
+	val := FloatFromStringDontRound(545, -2) // output: 500
+	fmt.Printf("ret: %v, %T\n", val, val)
+
+	val = FloatFromStringDontRound(-500, -2) // output: -500
+	fmt.Printf("ret: %v, %T\n", val, val)
+
+	val = FloatFromStringDontRound(1.1001, 2) // output: 1.1
+	fmt.Printf("ret: %v, %T\n", val, val)
+
+	val = FloatFromStringDontRound(1.454, 1) // output: 1.4
+	fmt.Printf("ret: %v, %T\n", val, val)
+}
+
+// RUN
+// go test -v ./commonutils -run TestFormatDecimalFloat64
+func TestFormatDecimalFloat64(t *testing.T) {
+	t.Parallel()
+	val := FormatDecimalFloat64(123.456, -2) // output: 123.46
+	fmt.Printf("ret: %v, %T\n", val, val)
+
+	val = FormatDecimalFloat64(-500, -2) // output: -500
+	fmt.Printf("ret: %v, %T\n", val, val)
+
+	val = FormatDecimalFloat64(1.1001, -2) // output: 1.1
+	fmt.Printf("ret: %v, %T\n", val, val)
+
+	val = FormatDecimalFloat64(1.454, -1) // output: 1.5
+	fmt.Printf("ret: %v, %T\n", val, val)
+}

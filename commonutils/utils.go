@@ -622,15 +622,16 @@ func FormatDecimalString(value float64, exp int32) string {
 	return decimal.NewFromFloatWithExponent(value, exp).String()
 }
 
-// FormatDecimalFloat64 获取精度计算后的数量String
-// @param  {[type]} this [description]
-// @return {[type]}      [description]
+// FormatDecimalFloat64 获取精度计算后的数量
+//
+//	 example
+//		  FormatDecimalFloat64(123.456, -2)   // output: 123.46
+//		  FormatDecimalFloat64(-500,-2)   // output: -500
+//		  FormatDecimalFloat64(1.1001, -2) // output: 1.1
+//		  FormatDecimalFloat64(1.454, -1) // output: 1.5
 func FormatDecimalFloat64(value float64, exp int32) float64 {
-	returnValue, err := strconv.ParseFloat(FormatDecimalString(value, exp), 64)
-	if err != nil {
-		panic("unable to read value:" + err.Error())
-	}
-	return returnValue
+	var val, _ = decimal.NewFromFloatWithExponent(value, exp).Float64()
+	return val
 }
 
 // FloatFromString format
@@ -647,45 +648,24 @@ func FloatFromString(raw interface{}) (float64, error) {
 }
 
 // FloatFromStringDontRound 不需要小数点四舍五入，直接取位数
-func FloatFromStringDontRound(num float64, exp int) (result float64, err error) {
-	n := strconv.FormatFloat(num, 'f', -1, 32)
-	newn := strings.Split(n, ".")
-	if exp < 0 {
-		exp = int(math.Abs(float64(exp)))
-	}
-	if len(newn) == 1 {
-		result, err = strconv.ParseFloat(newn[0], 64)
-	} else if len(newn[1]) >= exp {
-		result, err = strconv.ParseFloat(newn[0]+"."+newn[1][:exp], 64)
-	} else {
-		result, err = strconv.ParseFloat(newn[0]+"."+newn[1], 64)
-	}
-	if err != nil {
-		return 0, err
-	}
-	return result, nil
+//
+//	 example
+//		  FloatFromStringDontRound(545, -2)   // output: 500
+//		  FloatFromStringDontRound(-500,-2)   // output: -500
+//		  FloatFromStringDontRound(1.1001, 2) // output: 1.1
+//		  FloatFromStringDontRound(1.454, 1) // output: 1.4
+func FloatFromStringDontRound(num float64, exp int32) float64 {
+	var val, _ = decimal.NewFromFloat(num).RoundFloor(exp).Float64()
+	return val
 }
 
 // Int32ToString format
+//
+//	 example
+//		  Int32ToString(123)   // output: "123"
+//		  Int32ToString(-10)   // output: "-10"
 func Int32ToString(n int32) string {
-	buf := [11]byte{}
-	pos := len(buf)
-	i := int64(n)
-	signed := i < 0
-	if signed {
-		i = -i
-	}
-	for {
-		pos--
-		buf[pos], i = '0'+byte(i%10), i/10
-		if i == 0 {
-			if signed {
-				pos--
-				buf[pos] = '-'
-			}
-			return string(buf[pos:])
-		}
-	}
+	return decimal.NewFromInt32(n).String()
 }
 
 // IntFromString format
